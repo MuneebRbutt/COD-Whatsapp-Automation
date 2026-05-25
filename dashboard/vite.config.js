@@ -13,9 +13,8 @@ export default defineConfig({
     // Proxy API calls to backend during development
     proxy: {
       '/api': {
-        target: 'https://cod-whatsapp-automation-production.up.railway.app',
+        target: 'http://localhost:3000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
