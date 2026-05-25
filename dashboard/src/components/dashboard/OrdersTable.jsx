@@ -52,12 +52,15 @@ export default function OrdersTable({ orders, loading, onStatusFilter, currentFi
   ]
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 shadow-card overflow-hidden animate-fade-in">
+    <div className="dark-card overflow-hidden animate-fade-in shadow-card">
       {/* Table header with filter */}
-      <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between gap-4">
+      <div 
+        className="px-5 py-4 flex items-center justify-between gap-4"
+        style={{ borderBottom: '1px solid var(--bg-border)' }}
+      >
         <div>
-          <h2 className="text-base font-semibold text-slate-800">Recent Orders</h2>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <h2 className="text-base font-semibold" style={{ color: 'var(--text-primary)' }}>Recent Orders</h2>
+          <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
             {loading ? 'Loading...' : `${orders?.length || 0} orders`}
           </p>
         </div>
@@ -67,10 +70,13 @@ export default function OrdersTable({ orders, loading, onStatusFilter, currentFi
           id="orders-status-filter"
           value={currentFilter}
           onChange={(e) => onStatusFilter(e.target.value)}
-          className="text-sm border border-slate-200 rounded-lg px-3 py-1.5 text-slate-600 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="text-sm border rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          style={{ background: 'var(--bg-elevated)', borderColor: 'var(--bg-border)', color: 'var(--text-secondary)' }}
         >
           {statusOptions.map(opt => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
+            <option key={opt.value} value={opt.value} style={{ background: 'var(--bg-elevated)' }}>
+              {opt.label}
+            </option>
           ))}
         </select>
       </div>
@@ -79,26 +85,26 @@ export default function OrdersTable({ orders, loading, onStatusFilter, currentFi
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-slate-50 border-b border-slate-100">
-              <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Customer</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Phone</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Items</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Status</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Time</th>
+            <tr style={{ background: 'var(--bg-elevated)', borderBottom: '1px solid var(--bg-border)' }}>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Customer</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Phone</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Items</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Status</th>
+              <th className="text-left px-4 py-3 text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Time</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-50">
+          <tbody className="divide-y" style={{ borderColor: 'var(--bg-border-sub)' }}>
             {/* Loading skeletons */}
             {loading && Array.from({ length: 6 }).map((_, i) => <SkeletonRow key={i} />)}
 
             {/* Empty state */}
             {!loading && (!orders || orders.length === 0) && (
               <tr>
-                <td colSpan={5} className="px-4 py-12 text-center text-slate-400 text-sm">
+                <td colSpan={5} className="px-4 py-12 text-center text-sm" style={{ color: 'var(--text-muted)' }}>
                   <div className="flex flex-col items-center gap-2">
-                    <svg className="w-10 h-10 text-slate-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-10 h-10 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0a2 2 0 01-2 2H6a2 2 0 01-2-2m16 0l-8 4-8-4" />
                     </svg>
                     No orders found
                   </div>
@@ -115,14 +121,14 @@ export default function OrdersTable({ orders, loading, onStatusFilter, currentFi
                 onClick={() => navigate(`/orders/${order.id}`)}
               >
                 <td className="px-4 py-3">
-                  <span className="font-medium text-slate-800">{order.customer_name || '—'}</span>
+                  <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{order.customer_name || '—'}</span>
                 </td>
-                <td className="px-4 py-3 text-slate-500 font-mono text-xs">{order.customer_phone || '—'}</td>
-                <td className="px-4 py-3 text-slate-500">{formatItems(order.order_items)}</td>
+                <td className="px-4 py-3 font-mono text-xs" style={{ color: 'var(--text-secondary)' }}>{order.customer_phone || '—'}</td>
+                <td className="px-4 py-3" style={{ color: 'var(--text-secondary)' }}>{formatItems(order.order_items)}</td>
                 <td className="px-4 py-3">
-                  <StatusBadge status={order.status} />
+                  <StatusBadge status={order.status} needsManualReview={order.needs_manual_review} />
                 </td>
-                <td className="px-4 py-3 text-slate-400 text-xs whitespace-nowrap">
+                <td className="px-4 py-3 text-xs whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>
                   {formatTime(order.created_at)}
                 </td>
               </tr>

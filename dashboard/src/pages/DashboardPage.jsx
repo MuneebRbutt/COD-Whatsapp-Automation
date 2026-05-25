@@ -138,20 +138,23 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       {/* Page header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
             {business?.name ? `${business.name}` : 'Dashboard'}
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>
             Welcome back · Here's what's happening today
           </p>
         </div>
 
         {/* Auto-refresh indicator */}
-        <div className="flex items-center gap-2 text-xs text-slate-400 bg-white border border-slate-200 px-3 py-2 rounded-xl">
+        <div 
+          className="flex items-center gap-2 text-xs px-3 py-2 rounded-xl"
+          style={{ background: 'var(--bg-surface)', border: '1px solid var(--bg-border)', color: 'var(--text-muted)' }}
+        >
           <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
           <span>Auto-refreshing in {countdown}s</span>
         </div>
@@ -174,13 +177,16 @@ export default function DashboardPage() {
 
       {/* Average confirmation time banner */}
       {!loading && stats?.average_confirmation_time != null && (
-        <div className="bg-blue-50 border border-blue-100 rounded-2xl px-5 py-3 flex items-center gap-3 animate-fade-in">
-          <svg className="w-5 h-5 text-blue-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div 
+          className="rounded-2xl px-5 py-3 flex items-center gap-3 animate-fade-in"
+          style={{ background: 'rgba(37, 99, 235, 0.1)', border: '1px solid rgba(37, 99, 235, 0.2)' }}
+        >
+          <svg className="w-5 h-5 text-blue-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
               d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p className="text-sm text-blue-700">
-            <span className="font-semibold">Average confirmation time:</span>{' '}
+          <p className="text-sm" style={{ color: 'var(--text-primary)' }}>
+            <span className="font-semibold text-blue-400">Average confirmation time:</span>{' '}
             {stats.average_confirmation_time.toFixed(1)} minutes
           </p>
         </div>
