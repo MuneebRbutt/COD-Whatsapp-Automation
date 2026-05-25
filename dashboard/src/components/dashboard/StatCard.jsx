@@ -42,7 +42,7 @@ export default function StatCard({ title, count, percentage, color, icon, loadin
 
   if (loading) {
     return (
-      <div className="bg-white rounded-2xl border border-slate-100 p-5 stat-card">
+      <div className="dark-card rounded-2xl border border-[var(--bg-border)] p-5 stat-card shadow-card">
         <div className="skeleton h-4 w-24 mb-4 rounded" />
         <div className="skeleton h-8 w-16 mb-2 rounded" />
         <div className="skeleton h-3 w-20 rounded" />

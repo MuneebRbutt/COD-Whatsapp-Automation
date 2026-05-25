@@ -8,7 +8,7 @@ import Sidebar from './Sidebar'
 
 export default function Layout() {
   return (
-    <div className="flex min-h-screen bg-slate-50">
+    <div className="flex min-h-screen" style={{ background: 'var(--bg-base)' }}>
       {/* Fixed sidebar */}
       <Sidebar />
 
