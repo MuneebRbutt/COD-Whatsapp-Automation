@@ -7,6 +7,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { startFollowUpJob } = require('./jobs/followUp');
@@ -78,6 +79,20 @@ app.use('/api/orders', require('./routes/orders'));
 app.use('/api/stats', require('./routes/stats'));
 app.use('/api/profile', require('./routes/profile'));
 app.use('/webhook', require('./routes/webhook'));
+
+// --- Static File Serving (For Single-Domain Deployment) ---
+// Serve static assets from the dashboard/dist folder
+app.use(express.static(path.join(__dirname, '../dashboard/dist')));
+
+// Catch-all route: Send all other requests to the React app's index.html
+// This handles client-side routing (e.g., /orders, /settings)
+app.get('*', (req, res) => {
+  // If the request is for an API route that wasn't caught, return 404
+  if (req.originalUrl.startsWith('/api')) {
+    return res.status(404).json({ error: 'API route not found' });
+  }
+  res.sendFile(path.join(__dirname, '../dashboard/dist/index.html'));
+});
 
 // Backward compatibility or other dashboard routes if any
 // app.use('/', require('./routes/dashboard')); // Disabled in favor of clean /api structure
