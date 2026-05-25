@@ -1,0 +1,210 @@
+/* ============================================================
+   COD Confirm Dashboard - Global Styles
+   Dark mode first design with Tailwind CSS v4
+   ============================================================ */
+
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ── Design tokens ─────────────────────────────────────────── */
+@theme {
+  --color-primary-50:  #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary-950: #172554;
+
+  --font-family-sans: 'Inter', system-ui, sans-serif;
+
+  --shadow-card:       0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-card-hover: 0 4px 12px -2px rgb(0 0 0 / 0.4);
+  --shadow-modal:      0 20px 40px -8px rgb(0 0 0 / 0.6), 0 8px 16px -4px rgb(0 0 0 / 0.4);
+}
+
+/* ── Base reset ────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Dark background system ────────────────────────────────── */
+:root {
+  --bg-base:       #0d1117;
+  --bg-surface:    #161b22;
+  --bg-elevated:   #1c2128;
+  --bg-hover:      #21262d;
+  --bg-border:     #30363d;
+  --bg-border-sub: #21262d;
+
+  --text-primary:  #e6edf3;
+  --text-secondary:#8b949e;
+  --text-muted:    #6e7681;
+
+  --accent-blue:   #2563eb;
+  --accent-blue-h: #1d4ed8;
+  --accent-glow:   rgba(37, 99, 235, 0.25);
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar          { width: 6px; height: 6px; }
+::-webkit-scrollbar-track    { background: var(--bg-surface); }
+::-webkit-scrollbar-thumb    { background: var(--bg-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #484f58; }
+
+/* ── Focus ring ────────────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+/* ── Transitions ───────────────────────────────────────────── */
+button, a, input, select, textarea { transition: all 0.15s ease; }
+
+/* ── Skeleton loading ──────────────────────────────────────── */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+.skeleton {
+  animation: skeleton-pulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: var(--bg-elevated);
+  border-radius: 4px;
+}
+
+/* ── Page transitions ──────────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fade-in 0.3s ease-out forwards; }
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.animate-slide-in { animation: slide-in 0.2s ease-out forwards; }
+
+/* ── Chat bubbles ──────────────────────────────────────────── */
+.chat-bubble-incoming {
+  background: var(--bg-elevated);
+  border: 1px solid var(--bg-border);
+  color: var(--text-primary);
+  border-radius: 4px 16px 16px 16px;
+}
+.chat-bubble-outgoing {
+  background: var(--accent-blue);
+  color: #fff;
+  border-radius: 16px 4px 16px 16px;
+}
+.chat-bubble-system {
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  color: var(--text-secondary);
+  border-radius: 8px;
+}
+
+/* ── Status badges ─────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.badge-confirmed    { background: rgba(34,197,94,0.15);  color: #4ade80; border: 1px solid rgba(34,197,94,0.25); }
+.badge-cancelled    { background: rgba(239,68,68,0.15);  color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+.badge-pending      { background: rgba(234,179,8,0.15);  color: #facc15; border: 1px solid rgba(234,179,8,0.25); }
+.badge-no_response  { background: rgba(139,148,158,0.15);color: #8b949e; border: 1px solid rgba(139,148,158,0.2); }
+.badge-review       { background: rgba(249,115,22,0.15); color: #fb923c; border: 1px solid rgba(249,115,22,0.25); }
+
+/* ── Stat card ─────────────────────────────────────────────── */
+.stat-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgb(0 0 0 / 0.5);
+  border-color: var(--accent-blue) !important;
+}
+
+/* ── Table row hover ───────────────────────────────────────── */
+.table-row-hover:hover {
+  background-color: var(--bg-hover);
+  cursor: pointer;
+}
+
+/* ── Copy button flash ─────────────────────────────────────── */
+@keyframes copy-flash {
+  0%   { background-color: rgba(34,197,94,0.2); }
+  100% { background-color: transparent; }
+}
+.copy-flash { animation: copy-flash 0.6s ease-out; }
+
+/* ── Card surface ──────────────────────────────────────────── */
+.dark-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--bg-border);
+  border-radius: 16px;
+}
+
+/* ── Input dark ────────────────────────────────────────────── */
+.dark-input {
+  background: var(--bg-elevated);
+  border: 1px solid var(--bg-border);
+  color: var(--text-primary);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  width: 100%;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.dark-input::placeholder { color: var(--text-muted); }
+.dark-input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* ── Button primary ────────────────────────────────────────── */
+.btn-primary {
+  background: var(--accent-blue);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.btn-primary:hover    { background: var(--accent-blue-h); }
+.btn-primary:active   { transform: scale(0.98); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Review alert pulse ────────────────────────────────────── */
+@keyframes review-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4); }
+  50%       { box-shadow: 0 0 0 4px rgba(249, 115, 22, 0); }
+}
+.review-pulse { animation: review-pulse 2s infinite; }
+
+/* ── Glow border on focus cards ────────────────────────────── */
+.glow-blue {
+  box-shadow: 0 0 0 1px var(--accent-blue), 0 0 16px var(--accent-glow);
+}
