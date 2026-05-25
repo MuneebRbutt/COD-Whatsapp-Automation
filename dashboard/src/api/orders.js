@@ -8,7 +8,7 @@ import apiClient from './client'
  * @param {Object} params - { status, date_from, date_to, page, limit }
  */
 export const getOrders = async (params = {}) => {
-  const response = await apiClient.get('/dashboard/orders', { params })
+  const response = await apiClient.get('/orders', { params })
   return response.data
 }
 
@@ -17,7 +17,7 @@ export const getOrders = async (params = {}) => {
  * @param {string} orderId
  */
 export const getOrder = async (orderId) => {
-  const response = await apiClient.get(`/dashboard/orders/${orderId}`)
+  const response = await apiClient.get(`/orders/${orderId}`)
   return response.data
 }
 
@@ -25,7 +25,7 @@ export const getOrder = async (orderId) => {
  * Get aggregate stats for the current business
  */
 export const getStats = async () => {
-  const response = await apiClient.get('/dashboard/stats')
+  const response = await apiClient.get('/stats')
   return response.data
 }
 
@@ -38,6 +38,6 @@ export const getStats = async () => {
 export const overrideOrderStatus = async (orderId, status, updatedAddress = null) => {
   const body = { status }
   if (updatedAddress) body.updated_address = updatedAddress
-  const response = await apiClient.put(`/dashboard/orders/${orderId}/override`, body)
+  const response = await apiClient.put(`/orders/${orderId}`, body)
   return response.data
 }

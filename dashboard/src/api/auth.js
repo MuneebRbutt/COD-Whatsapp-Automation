@@ -24,7 +24,7 @@ export const signup = async (data) => {
  * Get current business profile + API key
  */
 export const getProfile = async () => {
-  const response = await apiClient.get('/dashboard/profile')
+  const response = await apiClient.get('/profile')
   return response.data
 }
 
@@ -32,6 +32,6 @@ export const getProfile = async () => {
  * Update language preference (urdu | english | both)
  */
 export const updateLanguage = async (language_preference) => {
-  const response = await apiClient.put('/dashboard/settings', { language_preference })
+  const response = await apiClient.put('/profile', { language_preference })
   return response.data
 }
