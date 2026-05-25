@@ -48,7 +48,7 @@ router.post(
       const insertQuery = `
         INSERT INTO businesses (name, email, password_hash, whatsapp_number, language_preference)
         VALUES ($1, $2, $3, $4, 'both')
-        RETURNING id, name, email, api_key, whatsapp_number;
+        RETURNING id, name, email, whatsapp_number;
       `;
       const result = await db.query(insertQuery, [name, email, hashedPassword, whatsapp_number]);
       const business = result.rows[0];
@@ -65,7 +65,6 @@ router.post(
           id: business.id,
           name: business.name,
           email: business.email,
-          api_key: business.api_key,
           whatsapp_number: business.whatsapp_number
         }
       });
@@ -113,7 +112,6 @@ router.post(
           id: business.id,
           name: business.name,
           email: business.email,
-          api_key: business.api_key,
           whatsapp_number: business.whatsapp_number
         }
       });

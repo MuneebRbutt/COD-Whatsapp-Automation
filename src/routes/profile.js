@@ -17,7 +17,7 @@ router.get('/', authenticateToken, async (req, res) => {
   const businessId = req.business.id;
   try {
     const result = await db.query(
-      'SELECT id, name, email, whatsapp_number, language_preference, api_key, created_at FROM businesses WHERE id = $1',
+      'SELECT id, name, email, whatsapp_number, language_preference, created_at FROM businesses WHERE id = $1',
       [businessId]
     );
     if (result.rows.length === 0) {
