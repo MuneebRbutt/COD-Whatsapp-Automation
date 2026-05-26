@@ -1,19 +1,26 @@
-# Dockerfile for Node.js backend
-# ---------------------------------------------------
-# Use the lightweight Alpine Linux image with Node.js 18
-FROM node:18-alpine AS base
+# Stage 1: Build the React dashboard frontend
+FROM node:18-alpine AS dashboard-builder
+WORKDIR /app/dashboard
+COPY dashboard/package*.json ./
+RUN npm ci
+COPY dashboard/ ./
+RUN npm run build
 
-# Set working directory
+# Stage 2: Create the runtime production image
+FROM node:18-alpine AS runner
 WORKDIR /app
 
-# Install only production dependencies (but also dev for build)
+# Install backend production dependencies
 COPY package*.json ./
 RUN npm ci --only=production
 
-# Copy source code
+# Copy backend source code
 COPY . ./
 
-# Expose the port the app runs on
+# Copy built frontend assets from the builder stage
+COPY --from=dashboard-builder /app/dashboard/dist ./dashboard/dist
+
+# Expose port
 EXPOSE 3000
 
 # Start the server

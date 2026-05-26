@@ -77,7 +77,7 @@ export default function SettingsPage() {
 
   // Shopify webhook URL for this business
   const apiKey = profile?.api_key || business?.api_key || ''
-  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://your-backend.com'
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || window.location.origin
   const webhookUrl = `${backendUrl}/webhook/shopify?api_key=${apiKey}`
 
   if (loading) {

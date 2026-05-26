@@ -1,6 +1,6 @@
 {
   "build": {
-    "command": "npm install"
+    "command": "npm install && npm run install:dashboard && npm run build:dashboard"
   },
   "start": {
     "command": "node src/server.js"

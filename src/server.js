@@ -9,6 +9,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 const { startFollowUpJob } = require('./jobs/followUp');
 
 // Initialize the Express application
@@ -51,18 +52,7 @@ app.use(bodyParser.json({
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-/**
- * Root Route
- * Provides basic information about the API and prevents "Cannot GET /" errors on Railway.
- */
-app.get('/', (req, res) => {
-  res.status(200).json({
-    message: 'COD Whatsapp Automation API is running.',
-    version: '1.0.0',
-    status: 'healthy',
-    documentation: 'https://github.com/MuneebRbutt/COD-Whatsapp-Automation'
-  });
-});
+
 
 /**
  * Health Check Endpoint
@@ -78,6 +68,17 @@ app.use('/api/orders', require('./routes/orders'));
 app.use('/api/stats', require('./routes/stats'));
 app.use('/api/profile', require('./routes/profile'));
 app.use('/webhook', require('./routes/webhook'));
+
+// Serve static assets from the React dashboard
+app.use(express.static(path.join(__dirname, '../dashboard/dist')));
+
+// Wildcard route for client-side routing, ignoring API/webhook paths
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/webhook')) {
+    return next();
+  }
+  res.sendFile(path.join(__dirname, '../dashboard/dist/index.html'));
+});
 
 // Backward compatibility or other dashboard routes if any
 // app.use('/', require('./routes/dashboard')); // Disabled in favor of clean /api structure
